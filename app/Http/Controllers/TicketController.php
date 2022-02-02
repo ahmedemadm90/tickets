@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ClosedTicketsExport;
+use App\Exports\Tickets;
+use App\Exports\TicketsExport;
+use App\Exports\TicketsClosedExport;
 use App\Mail\NewTicketMail;
 use App\Models\Camera;
 use App\Models\Ticket;
@@ -9,11 +13,13 @@ use App\Models\TicketComment;
 use App\Models\User;
 use App\Notifications\NewTicket;
 use App\Notifications\NewTicketMail as NotificationsNewTicketMail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TicketController extends Controller
 {
@@ -73,7 +79,7 @@ class TicketController extends Controller
                 $input['details'] = $request->details;
                 $newticket = Ticket::create($input);
                 $ticket_id = $newticket->id;
-                $user = User::where('email', 'abdelrahman.hashem@cemex.com')->first();
+                $user = User::where('email', 'ahmedemadm90@gmail.com')->first();
                 FacadesNotification::send($user,new NewTicket($ticket_id));
             }else{
                 $camera = Camera::find($id);
@@ -187,4 +193,21 @@ class TicketController extends Controller
         $tickets = Ticket::where('id', $request->keyword)->orderBy('updated_at')->paginate(50);
         return view('tickets.searchresults', compact('tickets'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
+    public function export()
+    {
+        $date = Carbon::now();
+        return Excel::download(new TicketsExport, "Open Tickets $date.xlsx");
+    }
+    public function exportClosed()
+    {
+        $date = Carbon::now();
+        return Excel::download(new ClosedTicketsExport, "Closed Tickets $date.xlsx");
+    }
+    public function exportAll()
+    {
+        $date = Carbon::now();
+        //   dd($date);
+        return Excel::download(new Tickets, "All Tickets $date.xlsx");
+    }
+
 }

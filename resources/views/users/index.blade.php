@@ -1,26 +1,27 @@
 @extends('layouts.app')
 @section('title')
-Manage Users
+{{__('Manage Users')}}
 @endsection
-@section('page-title')
-Manage Users
+@section('pagetitle')
+    {{ __('Manage Users') }}
 @endsection
-@section('header')
-@include('layouts.header')
+@section('pagelink')
+    {{ __('Manage Users') }}
+@endsection
+@section('navbar')
+    @include('layouts.navbar')
 @endsection
 @section('sidebar')
 @include('layouts.sidebar')
 @endsection
-@section('page-title-desc')
-Manage Users Who Uses The Web App
-@endsection
+
 @section('content')
 <hr class="">
-@can('User Create')
+@can('Users Create')
 <div class="row">
     <div class="col-lg-12 m-2">
         <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+            <a class="btn btn-success" href="{{ route('users.create') }}"> {{__('Manage Users')}}</a>
         </div>
     </div>
 </div>
@@ -38,7 +39,7 @@ Manage Users Who Uses The Web App
         <th>Email</th>
         <th>Roles</th>
         <th>State</th>
-        <th>Admin Group</th>
+
         <th>Action</th>
     </tr>
     @foreach ($data as $key => $user)
@@ -54,30 +55,30 @@ Manage Users Who Uses The Web App
             @endif
         </td>
         <td class="text-capitalize">
-            @if ($user->state == 'active')
-            <label for="" class="badge bg-success text-capitalize">{{$user->state}}</label>
+            @if ($user->active == 1)
+            <label for="" class="badge bg-success text-capitalize">{{__('active')}}</label>
             @else
-            <label for="" class="badge bg-danger text-capitalize">{{$user->state}}</label>
+            <label for="" class="badge bg-danger text-capitalize">{{__('Disabled')}}</label>
             @endif
         </td>
-        <td class="text-capitalize">
+        {{-- <td class="text-capitalize">
             <label for=""
                 class="badge bg-info text-capitalize">{{$user->group->group_name ?? 'User Is Not In Any Groups'}}</label>
-        </td>
+        </td> --}}
         <td>
             <div class="dropdown">
-                <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-expanded="false">
                     <i class="fas fa-ellipsis-v"></i>
                 </button>
-                <ul class="dropdown-menu text-capitalize" aria-labelledby="dropdownMenuButton1">
-                    @can('User Show')
+                <ul class="dropdown-menu text-capitalize dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                    @can('Users Show')
                     <li><a class="dropdown-item" href="{{ route('users.show',$user->id) }}">Show</a></li>
                     @endcan
-                    @can('User Edit')
+                    @can('Users Edit')
                     <li><a class="dropdown-item" href="{{ route('users.edit',$user->id) }}">Edit</a></li>
                     @endcan
-                    @can('User Delete')
+                    @can('Users Destroy')
                     <li><a class="dropdown-item" href="{{ route('users.destroy',$user->id) }}">Remove</a></li>
                     @endcan
                 </ul>

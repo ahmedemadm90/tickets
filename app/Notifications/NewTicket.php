@@ -41,11 +41,11 @@ class NewTicket extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = 'http://8c1d-197-39-165-59.ngrok.io/tickets/show/'. $this->ticket_id;
+        /* $url = 'http://8c1d-197-39-165-59.ngrok.io/tickets/show/'. $this->ticket_id; */
         return (new MailMessage)
-            ->subject('New Ticket || '.$this->ticket_id)
-            ->line('New Ticket || '.$this->ticket_id)
-            ->action('Show Ticket Details', $url)
+            ->subject('New Ticket')
+            ->line('New Ticket')
+            ->action('Show Ticket Details', url('/'))
             ->line('Thank you for using our application!');
     }
     /**

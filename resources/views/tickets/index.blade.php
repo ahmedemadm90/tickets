@@ -17,28 +17,17 @@
 @section('content')
     <hr class="">
     <div class="row">
-        @can('Tickets Create')
-            <div class="col-md m-2">
-                <div class="pull-right">
-                    <a class="btn btn-success" href="{{ route('tickets.create') }}"> {{ __('Create New Ticket') }}</a>
-                </div>
-            </div>
-        @endcan
-        {{-- <div class="col-md">
-            <form action="{{ route('tickets.search.results') }}" class="form form-inline" method="post">
-                @csrf
-                <div class="w-75 m-auto">
-                        <select class="custom-select w-100 name="keyword">
-                            @foreach ($tickets as $ticket)
-                                <option class="p-1" value="{{ $ticket->id }}">
-                                    {{ $ticket->camera($ticket->camera_id)->code }} ||
-                                    {{ $ticket->camera($ticket->camera_id)->en_name }}</option>
-                            @endforeach
-                        </select>
-                </div>
-                <button class="btn btn-success fs-5" id="dashboardjson">{{ __('Search') }}</button>
-            </form>
-        </div> --}}
+        <div class="col-md m-2">
+            @can('Tickets Create')
+            <a class="btn btn-success" href="{{ route('tickets.create') }}"> {{ __('Create New Ticket') }}</a>
+            @endcan
+            @can('Export Open Tickets')
+            <a class="btn btn-info" href="{{ route('tickets.open.export') }}"> {{ __('Export Open Tickets') }}</a>
+            @endcan
+            @can('Export All Tickets')
+            <a class="btn btn-info" href="{{ route('tickets.all.export') }}"> {{ __('Export All Tickets') }}</a>
+            @endcan
+        </div>
     </div>
     @include('layouts.sessions')
     @include('layouts.errors')
@@ -65,7 +54,7 @@
                     @endif
                 </td>
                 <td class="text-capitalize">
-                    {{ $ticket->created_at->diffForHumans() }}
+                    {{ $ticket->created_at}}
                 </td>
                 <td>
                     <div class="dropdown">

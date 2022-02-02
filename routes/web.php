@@ -233,6 +233,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/comment/{id}', [TicketController::class, "comment"])->name('tickets.comment');
         Route::post('/closed/search', [TicketController::class, "closedSearch"])->name('tickets.closed.results');
         Route::post('/tickets/search', [TicketController::class, "ticketsSearch"])->name('tickets.search.results');
+        Route::get('/open/export', [TicketController::class, "export"])->name('tickets.open.export');
+        Route::get('/closed/export', [TicketController::class, "exportClosed"])->name('tickets.closed.export');
+        Route::get('/all/export', [TicketController::class, "exportAll"])->name('tickets.all.export');
     });
     /* End Tickets Routes */
 });

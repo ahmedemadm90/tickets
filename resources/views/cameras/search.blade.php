@@ -82,6 +82,9 @@
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
                                     <div class="dropdown-menu dropdown-menu-right text-capitalize" aria-labelledby="dropdownMenuButton1">
+                                        @can('Cameras Show')
+                                            <a href="{{ route('cameras.show', $cam->id) }}" class="dropdown-item">{{ __('Show') }}</a>
+                                        @endcan
                                         @can('Cameras Edit')
                                             <a href="{{ route('cameras.edit', $cam->id) }}" class="dropdown-item">{{ __('Edit') }}</a>
                                         @endcan

@@ -1,9 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
-        <img src="{{ asset('img/logo.png') }}" alt="cemex Logo" class="brand-image img-circle elevation-3"
+        <img src="{{ asset('img/logo.png') }}" alt="cemex Logo" class="brand-image img-circle bg-gray"
             style="opacity: .8">
-        <span class="brand-text font-weight-light">CEMEX CLM</span>
+        <span class="brand-text font-weight-light">CEMEX</span>
     </a>
 
     <!-- Sidebar -->

@@ -20,27 +20,18 @@
 @section('content')
     <hr class="">
     <div class="row">
-        @can('Tickets Create')
-            <div class="col-md m-2">
-                <div class="pull-right">
-                    <a class="btn btn-success" href="{{ route('tickets.create') }}"> {{ __('Create New Ticket') }}</a>
-                </div>
-            </div>
-            {{-- <div class="col-md">
-                <form action="{{ route('tickets.closed.results') }}" class="form form-inline" method="post">
-                    @csrf
-                    <div class="w-75 m-auto">
-                        <div class="form-floating">
-                            <input type="text" class="form-control w-100" id="floatingInputGrid" name="keywords"
-                                placeholder="keywords">
-                            <label for="floatingInputGrid" class="fs-5">{{ __('keywords') }}</label>
-                        </div>
-                    </div>
-                    <button class="btn btn-success fs-5" id="dashboardjson">{{ __('Search') }}</button>
-                </form>
-            </div> --}}
+        <div class="col-md m-2">
+            @can('Tickets Create')
+                <a class="btn btn-success" href="{{ route('tickets.create') }}"> {{ __('Create New Ticket') }}</a>
+            @endcan
+            @can('Export Closed Tickets')
+                <a class="btn btn-danger" href="{{ route('tickets.closed.export') }}"> {{ __('Export Closed Tickets') }}</a>
+            @endcan
+            @can('Export All Tickets')
+                <a class="btn btn-primary" href="{{ route('tickets.all.export') }}"> {{ __('Export All Tickets') }}</a>
+            @endcan
         </div>
-    @endcan
+
     </div>
     @include('layouts.sessions')
     @include('layouts.errors')
@@ -60,10 +51,10 @@
                 <td>{{ $ticket->camera($ticket->camera_id)->code }}</td>
                 <td>{{ $ticket->camera($ticket->camera_id)->en_name }}</td>
                 <td>
-                    {{ $ticket->created_at->diffForHumans() }}
+                    {{ $ticket->created_at }}
                 </td>
                 <td>
-                    {{ $ticket->updated_at->diffForHumans() }}
+                    {{ $ticket->updated_at }}
                 </td>
                 <td>
                     {{ $ticket->user->name }}
